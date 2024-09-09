@@ -1,0 +1,82 @@
+
+##################### 编译路径的设置 #######################
+
+# input file
+MAIN.cc := Examples/main.cc
+MAIN.o := objs/main.o
+
+# 功能定义的文件
+cc_src := $(shell find src -name "*.cc") # 源文件路径
+o_objs := $(patsubst src/%.cc, objs/%.o, $(cc_src)) # 目标路径
+
+##################### 静态库 头文件 动态库 设置 #######################
+
+
+# 关于编译需要的头文件设置
+include_dir := ./include  # 头文件路径
+I_options := $(include_dir:%=-I%) # 头文件选项,批量操作
+
+
+#########静态库#########
+# 关于静态库设置
+library_dirs := ./lib  # 静态库路径
+linking_libs = name  # 静态库名称
+l_options = $(linking_libs:%=-l%) # 设置静态库选项
+L_options = $(library_dirs:%=-L%) # 设置路径参数
+
+
+######静态库编译#######
+# logging, create dir, 静态库编译
+lib/libname.a : $(o_objs)
+	@echo "[INFO] Generate $@, including: $^"
+	@mkdir -p $(dir $@)
+	@ar -r $@ $^
+
+static : lib/libname.a
+	@echo "[INFO] Generate $< successfully!"
+
+
+####### 编译选项的设置### 
+compile_options := -w -O3 -g -std=c++14 $(I_options)  # 头文件选项
+# compile_options := -w -O3 -g-std=c++11 $(I_options)
+link_options := $(l_options) $(L_options)# 连接选项
+
+
+##################### 编译实现 #######################
+
+# 编译main
+$(MAIN.o) : $(MAIN.cc)
+ 	# logging, create dir, compile
+	@echo "[INFO] compile $^ to $@"
+	@mkdir -p $(dir $@) 
+	@g++ -c $^ -o $@ $(compile_options)
+
+# 编译src功能...
+objs/%.o : src/%.cc
+ 	# logging, create dir, compile
+	@echo "[INFO] compile $^ to $@"
+	@mkdir -p $(dir $@) 
+	@g++ -c $^ -o $@ $(compile_options)
+
+# link 
+workspeace/exec : $(MAIN.o) lib/libname.a
+	@echo "[INFO] link $< to $@"
+	@mkdir -p $(dir $@)
+	@g++ $^ -o $@ $(link_options)
+
+
+##################### run clean debug #######################
+
+# run
+run : workspeace/exec
+	@./$<
+
+clean :
+	@echo "[INFO] clean"
+	@rm -rf workspeace objs 
+
+debug :
+	@echo $(library_dirs)
+	
+
+.PHONY : clean debug run dynamic_g static_g
