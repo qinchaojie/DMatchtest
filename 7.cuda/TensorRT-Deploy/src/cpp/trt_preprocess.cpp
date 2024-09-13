@@ -106,4 +106,6 @@ void preprocess_resize_gpu(         //->根据比例进行缩放 (GPU)
     CUDA_CHECK(cudaFree(d_src));
 }
 
+
+
 } //->namespace process

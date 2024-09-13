@@ -10,7 +10,7 @@ int main(int argc, char const *argv[])
 {
     YAML::Node config = YAML::LoadFile("./config/config.yaml");                                          //->加载YAML配置文件
 
-    string onnxPath       = config["onnxPath"].as<std::string>();                                        //->读取ONNX文件
+    string onnxPath       = config["onnxPath"].as<std::string>();                                        //->读取ONNX文件路径
     logger::Level level   = static_cast<logger::Level>(config["logging"]["level"].as<int32_t>());        //->设置日志等级
     model::Params params  = model::Params();
     const YAML::Node& img = config["model_params"]["image"];

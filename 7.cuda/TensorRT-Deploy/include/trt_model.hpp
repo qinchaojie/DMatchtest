@@ -20,10 +20,12 @@ enum task_type {        //->任务类型
     MULTITASK
 };
 
+
 enum device {           //->设备类型
     CPU,
     GPU
 };
+
 
 enum precision {        //->精度
     FP32,
@@ -31,12 +33,14 @@ enum precision {        //->精度
     INT8
 };
 
+
 struct image_info {     //->输入图像size
     int h;
     int w;
     int c;
     image_info(int height, int width, int channel) : h(height), w(width), c(channel) {}
 };
+
 
 struct Params {         //->构建模型参数
     device               dev           = GPU;
@@ -51,6 +55,7 @@ struct Params {         //->构建模型参数
     int                  cal_batchsize = 64;
 };
 
+
 template<typename T>            //->构建trt智能指针释放函数. trt指针的释放通过ptr->destroy完成
 void destroy_trt_ptr(T* ptr){
     if (ptr) {
@@ -60,11 +65,12 @@ void destroy_trt_ptr(T* ptr){
     };
 }
 
+
 class Model {
 
 public:
     Model(std::string onnx_path, logger::Level level, Params params); 
-    virtual ~Model() {};
+    virtual ~Model() {}; // 析构函数
     void load_image(std::string image_path);//->加载图像
     void init_model();                      //->初始化模型，包括build推理引擎, 分配内存，创建context, 设置bindings
     void inference();                       //->推理部分，preprocess ---> enqueue ---> postprocess
@@ -109,6 +115,7 @@ public:
 
     std::vector<void*> m_DeviceBindings;   //->用来保存bingds memory空间
 };
+
 
 }; //->namespace model
 
