@@ -22,7 +22,7 @@ int main(){
     printf("Address of c: %p\n", &c);
     printf("\n");
 
-    printf("Value of ptr: %p\n", ptra); //指针的值
+    printf("Value of ptr: %p\n", ptra); //指针的值是a的地址
     printf("Address of ptr: %p\n", &ptra); // & 取 ptra 的内存地址，
     printf("Value pointed by ptr: %d\n", *ptra); // 取 ptra 指向的值
 

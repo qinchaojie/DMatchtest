@@ -1,31 +1,42 @@
-#include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
+#include <stdio.h>
 
-struct Camera{
-    double focal;
-    double fx;
-    double fy;
-    double cx;
-    double cy;
-};
+#define OVERFLOW  -2
+#define UNDERFLOW -3
+#define ERROR 0
 
+typedef int cudaError_t;
 
+cudaError_t normMalloc(void* pDev, size_t size)
+{
+    // 内部做了:void* pDev = ptr
+    pDev = (int*)malloc(size); // 并没有改变外面的 ptr
+    if (!pDev)
+        exit(OVERFLOW);
+    return 0;
+}
+
+cudaError_t cudaMalloc(void** ppDev, size_t size)
+{
+    // 内部做了: void** ppDev = (void**)&ptr
+    
+    *ppDev = malloc(10); // *ppDev = ptr 改变了外面的 ptr
+    if (!(*ppDev))
+        exit(OVERFLOW);
+    return 0;
+}
 
 int main()
 {
+    int* ptr = nullptr;
 
-    int* pInt = new int[5];
-    if(pInt) printf("new an int.\n");
-    else printf("new failed.\n");
+    normMalloc(ptr, sizeof(int));
+    if(ptr) printf("normalMalloc succeed!\n");
+    else printf("normalMalloc faled!\n");
 
-    Camera* pCam = new Camera[5];
-    if(pCam) printf("new an pCam.\n");
-    else printf("new failed.\n");
+    cudaMalloc((void**)&ptr, sizeof(int));
+    if(ptr) printf("cudaMalloc succeed!\n");
+    else printf("cudaMalloc faled!\n");
 
-    delete[] pInt;
-    delete[] pCam;
-    pInt = nullptr;
-    pCam = nullptr;
     return 0;
 }

@@ -1,25 +1,20 @@
 #include <stdio.h>
 
-// int main(int argc, char *argv[])
-int main(int argc, char** argv)
+int main()
 {
-    // block, row, col
-    int a[3][2][2] = {0,1,2,3,4,5,6,7,8,9,10,11};
+    int array[10];
+    for(int i=0; i<10; i++){
+        array[i] = 33+i;
+    }
 
-    // address of block 0; int*[2][2]
-    printf("value of a  : %p\n", a);
-    printf("value of a+1: %p\n", a+1);
+    int* ptr = array; 
 
-    // address of block 1, row 0; int*[2]
-    printf("value of a[1]  : %p\n", a[1]);
-    printf("value of a[1]+1: %p\n", a[1]+1);
+    printf("value of ptr  : %p\n", ptr);
+    printf("value of *ptr  : %d\n", *ptr);
+    printf("value of array: %p\n\n", array);
 
-    // address of block 2, row 1, 1st element; 
-    printf("value of a[2][1]  : %p\n", a[2][1]);
-    printf("value of a[2][1]+1: %p\n", a[2][1]+1);
-
-    printf("value of a[2][0][1]:%d\n", a[2][0][1]);
-    printf("value of *(a[2][0] + 1): %d\n", *(a[2][0]+1));
+    printf("value of array[0]  : %d\n", array[0]);
+    printf("address of array[0]: %p\n", &array[0]);
 
     return 0;
 }
