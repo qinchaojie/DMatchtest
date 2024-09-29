@@ -1,4 +1,5 @@
 # CPP-Tutorial
+> makefile 路径下 make run运行
 
 ## Intro
 Linux 下 C/C++ 编程
@@ -18,6 +19,8 @@ Linux 下 C/C++ 编程
 8. Advanced: C++ 高级篇
 9. OOP: C++ 面向对象
 10. Template: 模板泛型编程
+11. 智能指针
+12. 文件操作
 ### 2 STL: C++ 标准模板库的学习
 1. Intro
 2. Smart Pointer: 智能指针
@@ -26,7 +29,8 @@ Linux 下 C/C++ 编程
 ### 4 Multithreading Concurrency: 多线程与并发
 ### 5 ....
 ### 6 opencv
-### 7 tensort deploy
+### 7 个人练习的案例
+### Template 这是一个c++开发模板
 
 <!-- &emsp;
 <div align=center>
