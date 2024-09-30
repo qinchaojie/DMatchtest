@@ -20,7 +20,7 @@ workspace/exec : $(cpp_objs)
 
 
 run : workspace/exec
-	@./$< -ss  jkolkd 
+	@./$<
 
 
 clean :
